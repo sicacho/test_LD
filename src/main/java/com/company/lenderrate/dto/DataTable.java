@@ -6,8 +6,9 @@ import java.util.*;
  * Created by Administrator on 10/21/2016.
  */
 public class DataTable {
-    List<Row> rows;
-    Map<String,List<String>> processResult;
+    private List<Row> rows;
+    private Map<String,List<String>> processResult;
+
     public DataTable() {
         if(rows==null) {
             rows = new ArrayList<>();
@@ -15,6 +16,7 @@ public class DataTable {
     }
 
     public void addRow(Row row) {
+        // Because we need to return a Map <Name,List<ChildrenName>> so , we can't allow duplicate name here .
         if(rows.contains(row)) {
             System.out.println("Name can't be duplicated");
         }
@@ -42,6 +44,14 @@ public class DataTable {
         return true;
     }
 
+    /**
+     * Update list children for each row in Datatable base on the row is just inserted .
+     * We have 2 case here .
+     * - The row is just inserted is child of a row in Datatable .
+     * - The row is just inserted is parent of a row in Datatable .
+     * @param rows
+     * @param rowInserted
+     */
     private void updateChildrenForRowsAfterInsert(List<Row> rows, Row rowInserted) {
         Iterator<Row> rowIterator = rows.iterator();
         while (rowIterator.hasNext()){
@@ -93,9 +103,15 @@ public class DataTable {
         return processResult;
     }
 
+    /**
+     * Insert name of children of Row into a List
+     * @param descendantNames
+     * @param row
+     */
     private void buildListDescendants(List<String> descendantNames,Row row) {
         if(row.getChildren()!=null) {
             for (Row rowChild : row.getChildren()) {
+                // avoid unlimited loop in case [cycle relationship : A is parent of B , B is parent of C , C is parent of A .]
                 if(!descendantNames.contains(rowChild.getName())) {
                     descendantNames.add(rowChild.getName());
                     buildListDescendants(descendantNames,rowChild);

@@ -9,10 +9,21 @@ import java.util.Map;
 
 public class Main {
 
+    /**
+     * Explain algorithm :
+     * We organize our Datatable by a List of Row .
+     * We will arrange the child-parent relationship each time we insert a new row .
+     * It is may be take more time to insert a row .
+     * But it will decrease the time when we want to access or perform an action into a specific children or descendant of Row .
+     * --- Cases covered :
+     *  + Cycle relationship
+     *  + Null ID , Name
+     *  + ID and PID is the same
+     * @param args
+     */
     public static void main(String[] args) {
-	// write your code here
         DataTable dataTable = new DataTable();
-        dataTable.addRow(new Row("0","A","5"));
+        dataTable.addRow(new Row("0","A",null));
         dataTable.addRow(new Row("1","B","0"));
         dataTable.addRow(new Row("2","C","0"));
         dataTable.addRow(new Row("4","D","1"));
