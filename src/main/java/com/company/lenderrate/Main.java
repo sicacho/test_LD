@@ -15,6 +15,7 @@ public class Main {
      * We will arrange the child-parent relationship each time we insert a new row .
      * It is may be take more time to insert a row .
      * But it will decrease the time when we want to access or perform an action into a specific children or descendant of Row .
+     * (EX : show how many children Row A have , Get the 2th child of row , Get all Row have 2 children , Get row don't have any child .)
      * --- Cases covered :
      *  + Cycle relationship
      *  + Null ID , Name
